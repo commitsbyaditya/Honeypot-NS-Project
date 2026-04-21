@@ -1,0 +1,11 @@
+{
+  "name": "honeypot-network-security-workspace",
+  "private": true,
+  "scripts": {
+    "dev:all": "npm --prefix Frontend run dev:all",
+    "dev:api": "npm --prefix Frontend run dev:api",
+    "dev:client": "npm --prefix Frontend run dev:client",
+    "build:frontend": "npm --prefix Frontend run build",
+    "kill:sim": "powershell -NoProfile -ExecutionPolicy Bypass -File ./kill_simulations.ps1"
+  }
+}

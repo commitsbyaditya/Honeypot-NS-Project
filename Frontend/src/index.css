@@ -1,0 +1,605 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core cyber palette */
+    --background: 220 25% 4%;
+    --foreground: 120 100% 90%;
+
+    --card: 220 22% 7%;
+    --card-foreground: 120 80% 88%;
+    --card-glass: 220 22% 9%;
+
+    --popover: 220 22% 8%;
+    --popover-foreground: 120 80% 88%;
+
+    /* Neon green primary */
+    --primary: 120 100% 50%;
+    --primary-foreground: 220 25% 4%;
+
+    --secondary: 220 20% 12%;
+    --secondary-foreground: 120 60% 80%;
+
+    --muted: 220 18% 10%;
+    --muted-foreground: 200 30% 55%;
+
+    /* Cyan accent */
+    --accent: 185 100% 50%;
+    --accent-foreground: 220 25% 4%;
+
+    --destructive: 0 90% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --warning: 45 100% 55%;
+    --warning-foreground: 220 25% 4%;
+
+    --border: 120 40% 15%;
+    --input: 220 20% 10%;
+    --ring: 120 100% 50%;
+
+    --radius: 0.5rem;
+
+    /* Glow effects */
+    --glow-primary: 0 0 20px hsl(120 100% 50% / 0.4), 0 0 40px hsl(120 100% 50% / 0.2);
+    --glow-accent: 0 0 20px hsl(185 100% 50% / 0.4), 0 0 40px hsl(185 100% 50% / 0.2);
+    --glow-destructive: 0 0 20px hsl(0 90% 60% / 0.4), 0 0 40px hsl(0 90% 60% / 0.2);
+    --glow-warning: 0 0 20px hsl(45 100% 55% / 0.4);
+
+    /* Cyber surfaces */
+    --cyber-surface: hsl(220 22% 6%);
+    --cyber-surface-raised: hsl(220 22% 9%);
+    --cyber-border-glow: hsl(120 100% 50% / 0.25);
+    --cyber-border: hsl(120 40% 20%);
+
+    /* Sidebar */
+    --sidebar-background: 220 25% 4%;
+    --sidebar-foreground: 120 80% 88%;
+    --sidebar-primary: 120 100% 50%;
+    --sidebar-primary-foreground: 220 25% 4%;
+    --sidebar-accent: 220 18% 10%;
+    --sidebar-accent-foreground: 120 80% 88%;
+    --sidebar-border: 120 40% 15%;
+    --sidebar-ring: 120 100% 50%;
+
+    --font-heading: 'Rajdhani', 'Orbitron', system-ui, sans-serif;
+    --font-display: 'Orbitron', monospace;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-heading);
+    background-color: hsl(220, 25%, 4%);
+    background-image:
+      radial-gradient(ellipse at 20% 50%, hsl(120 100% 50% / 0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, hsl(185 100% 50% / 0.04) 0%, transparent 60%),
+      linear-gradient(180deg, transparent 0%, hsl(220 25% 4%) 100%);
+    min-height: 100vh;
+  }
+
+  /* Scanline overlay on body */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(0 0% 0% / 0.08) 2px,
+      hsl(0 0% 0% / 0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+    border-left: 1px solid hsl(120 40% 10%);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(120 60% 25%);
+    border-radius: 0px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(120 100% 40%);
+    box-shadow: 0 0 6px hsl(120 100% 50%);
+  }
+
+  /* High-visibility text defaults */
+  h1, h2, h3, h4, h5, h6 {
+    color: hsl(120 80% 88%);
+    font-family: var(--font-heading);
+    letter-spacing: 0.02em;
+  }
+
+  p, span, div {
+    color: inherit;
+  }
+}
+
+@layer utilities {
+  /* ─── CYBER CARD ─── */
+  .cyber-card {
+    background: linear-gradient(
+      135deg,
+      hsl(220 22% 8%) 0%,
+      hsl(220 22% 6%) 100%
+    );
+    border: 1px solid hsl(120 60% 18%);
+    border-top-color: hsl(120 80% 30%);
+    border-left-color: hsl(120 65% 22%);
+    box-shadow:
+      0 0 0 1px hsl(120 100% 50% / 0.05) inset,
+      0 4px 24px -4px hsl(220 80% 2% / 0.8),
+      inset 0 1px 0 hsl(120 100% 50% / 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cyber-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(120 100% 50% / 0.6), transparent);
+  }
+
+  .cyber-card:hover {
+    border-color: hsl(120 80% 28%);
+    border-top-color: hsl(120 100% 50% / 0.6);
+    box-shadow:
+      0 0 0 1px hsl(120 100% 50% / 0.08) inset,
+      0 8px 32px -4px hsl(220 80% 2% / 0.9),
+      0 0 20px -6px hsl(120 100% 50% / 0.3),
+      inset 0 1px 0 hsl(120 100% 50% / 0.15);
+    transition: all 0.2s ease;
+  }
+
+  /* Raised hover card */
+  .cyber-card-hover {
+    @apply cyber-card;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+
+  .cyber-card-hover:hover {
+    transform: translateY(-4px);
+    border-top-color: hsl(120 100% 50% / 0.7);
+    box-shadow:
+      0 0 0 1px hsl(120 100% 50% / 0.1) inset,
+      0 16px 40px -8px hsl(220 80% 2%),
+      0 0 30px -8px hsl(120 100% 50% / 0.35),
+      inset 0 1px 0 hsl(120 100% 50% / 0.2);
+  }
+
+  /* ─── CYBER BUTTON ─── */
+  .cyber-btn {
+    background: linear-gradient(
+      180deg,
+      hsl(220 22% 13%) 0%,
+      hsl(220 22% 9%) 100%
+    );
+    border: 1px solid hsl(120 60% 20%);
+    border-top-color: hsl(120 60% 28%);
+    color: hsl(120 80% 75%);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    box-shadow:
+      0 1px 0 hsl(120 100% 50% / 0.08) inset,
+      0 2px 6px -1px hsl(220 80% 2% / 0.5);
+    transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cyber-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(120 100% 50% / 0.05), transparent);
+    transition: left 0.4s ease;
+  }
+
+  .cyber-btn:hover::after {
+    left: 100%;
+  }
+
+  .cyber-btn:hover {
+    border-color: hsl(120 80% 30%);
+    border-top-color: hsl(120 100% 50% / 0.5);
+    color: hsl(120 100% 85%);
+    box-shadow:
+      0 1px 0 hsl(120 100% 50% / 0.15) inset,
+      0 0 12px -3px hsl(120 100% 50% / 0.2);
+  }
+
+  .cyber-btn:active {
+    background: linear-gradient(180deg, hsl(220 22% 7%) 0%, hsl(220 22% 9%) 100%);
+    box-shadow: 0 1px 3px hsl(220 80% 2% / 0.5) inset;
+  }
+
+  /* Primary glowing button */
+  .cyber-btn-primary {
+    background: linear-gradient(
+      180deg,
+      hsl(120 90% 42%) 0%,
+      hsl(120 100% 32%) 100%
+    );
+    border: 1px solid hsl(120 100% 55%);
+    border-bottom-color: hsl(120 100% 20%);
+    color: hsl(220 25% 5%);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    box-shadow:
+      0 1px 0 hsl(120 100% 70% / 0.5) inset,
+      0 0 20px -4px hsl(120 100% 50% / 0.5),
+      0 4px 12px -2px hsl(220 80% 2% / 0.5);
+    transition: all 0.15s ease;
+  }
+
+  .cyber-btn-primary:hover {
+    background: linear-gradient(180deg, hsl(120 90% 48%) 0%, hsl(120 100% 36%) 100%);
+    box-shadow:
+      0 1px 0 hsl(120 100% 70% / 0.6) inset,
+      0 0 30px -4px hsl(120 100% 50% / 0.7),
+      0 6px 20px -4px hsl(120 100% 30% / 0.4);
+  }
+
+  .cyber-btn-primary:active {
+    background: linear-gradient(180deg, hsl(120 100% 28%) 0%, hsl(120 100% 32%) 100%);
+    box-shadow:
+      0 2px 6px hsl(120 100% 10% / 0.5) inset,
+      0 0 10px -4px hsl(120 100% 50% / 0.4);
+  }
+
+  /* Danger/abort button */
+  .cyber-btn-danger {
+    background: linear-gradient(180deg, hsl(0 80% 28%) 0%, hsl(0 80% 20%) 100%);
+    border: 1px solid hsl(0 80% 40%);
+    border-bottom-color: hsl(0 80% 12%);
+    color: hsl(0 90% 80%);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    box-shadow:
+      0 1px 0 hsl(0 90% 60% / 0.3) inset,
+      0 0 16px -4px hsl(0 90% 50% / 0.4);
+    transition: all 0.15s ease;
+  }
+
+  .cyber-btn-danger:hover {
+    border-color: hsl(0 90% 55%);
+    box-shadow:
+      0 1px 0 hsl(0 90% 60% / 0.4) inset,
+      0 0 24px -4px hsl(0 90% 50% / 0.6);
+    color: hsl(0 0% 100%);
+  }
+
+  /* ─── CYBER HEADER ─── */
+  .cyber-header {
+    background: linear-gradient(
+      180deg,
+      hsl(220 25% 6%) 0%,
+      hsl(220 25% 4%) 100%
+    );
+    border-bottom: 1px solid hsl(120 60% 15%);
+    box-shadow:
+      0 1px 0 hsl(120 100% 50% / 0.1) inset,
+      0 4px 20px -4px hsl(220 80% 2% / 0.8),
+      0 0 40px -20px hsl(120 100% 50% / 0.15);
+    position: relative;
+  }
+
+  .cyber-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, hsl(120 100% 50% / 0.5) 30%, hsl(185 100% 50% / 0.5) 70%, transparent 100%);
+  }
+
+  /* ─── STATUS PILL ─── */
+  .cyber-pill {
+    background: hsl(220 22% 8%);
+    border: 1px solid hsl(120 40% 15%);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: hsl(200 40% 60%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 2px;
+  }
+
+  .cyber-pill-green {
+    @apply cyber-pill;
+    border-color: hsl(120 80% 25%);
+    background: hsl(120 80% 8%);
+    color: hsl(120 100% 68%);
+    box-shadow: 0 0 8px -2px hsl(120 100% 50% / 0.3);
+  }
+
+  .cyber-pill-red {
+    @apply cyber-pill;
+    border-color: hsl(0 80% 30%);
+    background: hsl(0 80% 8%);
+    color: hsl(0 90% 70%);
+    box-shadow: 0 0 8px -2px hsl(0 90% 50% / 0.3);
+  }
+
+  .cyber-pill-yellow {
+    @apply cyber-pill;
+    border-color: hsl(45 80% 30%);
+    background: hsl(45 80% 8%);
+    color: hsl(45 100% 65%);
+    box-shadow: 0 0 8px -2px hsl(45 100% 50% / 0.3);
+  }
+
+  /* ─── TERMINAL / WELL ─── */
+  .cyber-terminal {
+    background: hsl(220 30% 3%);
+    border: 1px solid hsl(120 60% 15%);
+    border-top-color: hsl(120 80% 22%);
+    box-shadow:
+      0 0 0 1px hsl(0 0% 0% / 0.3) inset,
+      0 4px 16px -4px hsl(220 80% 2% / 0.8),
+      0 0 30px -10px hsl(120 100% 50% / 0.2);
+    position: relative;
+    font-family: var(--font-mono);
+  }
+
+  .cyber-terminal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(120 100% 50% / 0.5), transparent);
+  }
+
+  /* ─── PROGRESS TRACK ─── */
+  .cyber-track {
+    background: hsl(220 25% 5%);
+    border: 1px solid hsl(120 40% 12%);
+    box-shadow: 0 1px 4px hsl(220 80% 2% / 0.5) inset;
+  }
+
+  .cyber-fill {
+    background: linear-gradient(
+      90deg,
+      hsl(120 100% 36%) 0%,
+      hsl(120 100% 50%) 50%,
+      hsl(185 100% 50%) 100%
+    );
+    box-shadow:
+      0 0 8px hsl(120 100% 50% / 0.6),
+      0 0 20px hsl(120 100% 50% / 0.3);
+    position: relative;
+  }
+
+  .cyber-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: hsl(0 0% 100% / 0.15);
+    border-radius: inherit;
+  }
+
+  /* ─── ICON CONTAINERS ─── */
+  .cyber-icon {
+    background: hsl(220 25% 5%);
+    border: 1px solid hsl(120 60% 18%);
+    box-shadow:
+      0 0 8px -2px hsl(120 100% 50% / 0.15) inset,
+      0 2px 8px -2px hsl(220 80% 2% / 0.5);
+  }
+
+  /* ─── INPUT FIELD ─── */
+  .cyber-input {
+    background: hsl(220 25% 4%);
+    border: 1px solid hsl(120 40% 15%);
+    color: hsl(120 80% 82%);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    transition: all 0.15s ease;
+  }
+
+  .cyber-input:focus {
+    border-color: hsl(120 100% 40%);
+    box-shadow: 0 0 0 2px hsl(120 100% 50% / 0.1), 0 0 12px -3px hsl(120 100% 50% / 0.3);
+    outline: none;
+    color: hsl(120 100% 90%);
+  }
+
+  .cyber-input::placeholder {
+    color: hsl(200 30% 35%);
+  }
+
+  /* ─── TEXT GLOW UTILITIES ─── */
+  .text-glow-primary {
+    text-shadow:
+      0 0 10px hsl(120 100% 50% / 0.7),
+      0 0 20px hsl(120 100% 50% / 0.4),
+      0 0 40px hsl(120 100% 50% / 0.2);
+  }
+
+  .text-glow-accent {
+    text-shadow:
+      0 0 10px hsl(185 100% 50% / 0.7),
+      0 0 20px hsl(185 100% 50% / 0.4);
+  }
+
+  .text-glow-red {
+    text-shadow:
+      0 0 10px hsl(0 90% 60% / 0.7),
+      0 0 20px hsl(0 90% 60% / 0.4);
+  }
+
+  /* ─── GRID OVERLAY (for cards) ─── */
+  .cyber-grid {
+    background-image:
+      linear-gradient(hsl(120 100% 50% / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(120 100% 50% / 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* ─── LOGO / DISPLAY FONT ─── */
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* ─── BADGE PILLS ─── */
+  .pill-green {
+    background: hsl(120 80% 10%);
+    color: hsl(120 100% 68%);
+    border: 1px solid hsl(120 80% 25%);
+    box-shadow: 0 0 6px -2px hsl(120 100% 50% / 0.3);
+  }
+
+  .pill-yellow {
+    background: hsl(45 80% 10%);
+    color: hsl(45 100% 65%);
+    border: 1px solid hsl(45 80% 30%);
+  }
+
+  .pill-red {
+    background: hsl(0 80% 10%);
+    color: hsl(0 90% 70%);
+    border: 1px solid hsl(0 80% 30%);
+    box-shadow: 0 0 6px -2px hsl(0 90% 50% / 0.3);
+  }
+
+  /* ─── COMPATIBILITY ALIASES ─── */
+  .skeu-card-raised {
+    @apply cyber-card;
+  }
+
+  .glass-card {
+    @apply cyber-card;
+  }
+
+  .glass-card-hover {
+    @apply cyber-card-hover;
+  }
+
+  .skeu-button {
+    @apply cyber-btn;
+  }
+
+  .skeu-button-primary {
+    @apply cyber-btn-primary;
+  }
+
+  .skeu-badge {
+    @apply cyber-pill;
+  }
+
+  .skeu-header {
+    @apply cyber-header;
+  }
+
+  .skeu-icon-well {
+    @apply cyber-icon;
+  }
+
+  .skeu-icon-raised {
+    @apply cyber-icon;
+  }
+
+  .skeu-well {
+    @apply cyber-terminal;
+  }
+
+  .skeu-track {
+    @apply cyber-track;
+  }
+
+  .skeu-fill {
+    @apply cyber-fill;
+  }
+
+  .terminal-bg {
+    @apply cyber-terminal rounded-lg;
+  }
+
+  /* ─── CORNER DECORATIONS ─── */
+  .cyber-corner::before,
+  .cyber-corner::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-color: hsl(120 100% 50% / 0.6);
+    border-style: solid;
+  }
+
+  .cyber-corner::before {
+    top: 0;
+    left: 0;
+    border-width: 2px 0 0 2px;
+  }
+
+  .cyber-corner::after {
+    bottom: 0;
+    right: 0;
+    border-width: 0 2px 2px 0;
+  }
+
+  /* ─── DIVIDER ─── */
+  .cyber-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(120 100% 50% / 0.3) 30%, hsl(185 100% 50% / 0.3) 70%, transparent);
+  }
+
+  /* ─── WARNING/ALERT BADGE ─── */
+  .cyber-alert {
+    background: hsl(45 80% 8%);
+    border: 1px solid hsl(45 80% 22%);
+    border-left: 3px solid hsl(45 100% 55%);
+    color: hsl(45 100% 72%);
+    box-shadow: 0 0 12px -4px hsl(45 100% 50% / 0.2);
+  }
+
+  /* ─── SELECT STYLING ─── */
+  select option {
+    background: hsl(220, 22%, 8%);
+    color: hsl(120, 80%, 82%);
+  }
+}

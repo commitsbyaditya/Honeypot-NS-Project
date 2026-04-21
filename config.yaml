@@ -1,0 +1,76 @@
+# Multi-Attack Honeypot Network Security System Configuration
+# ============================================================
+# 
+# This file configures all honeypot services and detectors.
+# Edit to enable/disable specific attack detectors or change ports.
+
+# General settings
+general:
+  log_file: "data/attack_logs.csv"
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  auto_restart: true  # Restart crashed services
+
+# Network interface (leave empty for default)
+# Examples: "eth0", "Ethernet", "Wi-Fi"
+network:
+  interface: ""  # Empty = use system default
+
+# SSH Honeypot (existing)
+ssh_honeypot:
+  enabled: true
+  port: 2222
+  banner: "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.5"
+  max_login_attempts: 3
+  shell_timeout: 60
+
+# Port Scan Detector
+portscan_detector:
+  enabled: true
+  # Detection thresholds
+  min_ports_for_scan: 5      # Minimum ports to consider it a scan
+  aggressive_threshold: 10.0  # ports/sec for aggressive scan
+  stealth_threshold: 1.0      # ports/sec for stealth scan
+  session_timeout: 60         # seconds of inactivity
+
+# DNS Honeypot
+dns_honeypot:
+  enabled: true
+  port: 53  # Requires admin/root privileges
+  # Detection thresholds
+  tunneling_subdomain_length: 50  # chars (longer = potential tunneling)
+  high_query_rate: 10.0           # queries/sec
+  amplification_types:
+    - "ANY"
+    - "TXT"
+    - "NULL"
+
+# ARP Spoof Detector
+arp_detector:
+  enabled: true
+  # Requires admin/root privileges for raw sockets
+  # Detection thresholds
+  high_arp_rate: 5.0     # ARP packets/sec
+  session_timeout: 60    # seconds
+
+# ICMP Attack Detector
+icmp_detector:
+  enabled: true
+  # Requires admin/root privileges for raw sockets
+  # Detection thresholds
+  flood_threshold: 50.0     # ICMP packets/sec
+  oversized_threshold: 1500  # bytes (MTU)
+  session_timeout: 60       # seconds
+
+# Machine Learning settings
+ml:
+  model_path: "models/attack_model.pkl"
+  encoder_path: "models/label_encoder.pkl"
+  # Minimum samples before training
+  min_training_samples: 100
+  # Retrain interval (0 = manual only)
+  auto_retrain_interval: 0
+
+# Dashboard settings
+dashboard:
+  refresh_interval: 30  # seconds
+  default_filter: "all"  # all, ssh, portscan, dns, arp, icmp

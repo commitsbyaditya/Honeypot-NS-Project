@@ -1,0 +1,8 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<rect width="512" height="512" rx="96" fill="#0B1622"/>
+	<rect x="40" y="40" width="432" height="432" rx="72" stroke="#2E5D82" stroke-width="8"/>
+	<path d="M256 96L368 144V248C368 327.6 319.6 400.8 256 432C192.4 400.8 144 327.6 144 248V144L256 96Z" fill="#12334E"/>
+	<path d="M256 128L336 161.6V248C336 311.2 300 368.8 256 392.8C212 368.8 176 311.2 176 248V161.6L256 128Z" fill="#1F4F73"/>
+	<path d="M224 252L248 276L292 228" stroke="#8FD5FF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+	<text x="256" y="468" text-anchor="middle" fill="#CBE8FF" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700">HONEYPOT SECURITY</text>
+</svg>
